@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type H map[string]interface{}
+type H map[string]any
 
 type Context struct {
 	Writer    http.ResponseWriter
@@ -42,7 +42,7 @@ func (c *Context) SetHeader(key string, value string)  {
   c.Writer.Header().Set(key, value)
 }
 
-func (c *Context) String(status int, format string, values ...interface{})  {
+func (c *Context) String(status int, format string, values ...any) {
   c.SetHeader("Content-Type", "text/plain")
   c.Status(status)
   c.Writer.Write([]byte(fmt.Sprintf(format, values...)))
@@ -54,7 +54,7 @@ func (c *Context) Data(status int, data []byte)  {
   c.Writer.Write(data)
 }
 
-func (c *Context) JSON(status int, obj interface{})  {
+func (c *Context) JSON(status int, obj any)  {
   c.SetHeader("Content-Type", "application/json")
   c.Status(status)
 
